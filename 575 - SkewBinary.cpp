@@ -3,15 +3,15 @@
 #include <vector>
 using namespace std;
 int retornarSuma(string s){
-		int l = s.size();
-		int pos = 1;
-		long long suma = 0;
-		for(int i=l-1; i>=0; i--){
-			int a = s[i]-'0';
-			suma+=a*((pow(2,pos))-1);
-			pos++;
-		}
-		return suma;
+    int l = s.size();
+    int pos = 1;
+    long long suma = 0;
+    for(int i=l-1; i>=0; i--){
+ 	int a = s[i]-'0';
+	suma+=a*((pow(2,pos))-1);
+	pos++;
+    }
+    return suma;
 }
 
 main(){
