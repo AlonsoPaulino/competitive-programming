@@ -6,8 +6,7 @@
 
 using namespace std;
 
-bool myfunction (string s1, string s2)
-{
+bool myfunction (string s1, string s2){
     string aux1, aux2;
     aux1 = aux2 = "";
     aux1 = s1 + s2;
@@ -18,8 +17,8 @@ bool myfunction (string s1, string s2)
     }
     return retorno;
 }
-int main ()
-{
+
+int main (){
     int n;
     while (cin>>n) {
         if(n==0) return 0;
