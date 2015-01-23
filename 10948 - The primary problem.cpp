@@ -2,8 +2,7 @@
  
 bool a [1000003];
  
-void prime ()
-{
+void prime (){
     for ( int i = 0; i < 1000003; i++ )
         a [i] = true;
  
@@ -15,27 +14,19 @@ void prime ()
     a [0] = a [1] = false;
 }
  
-int main ()
-{
+int main (){
     prime ();
- 
     int n;
- 
     while ( scanf ("%d", &n) && n ) {
         int last;
- 
-        if ( n % 2 == 0 )
-            last = n - 1;
-        else
-            last = n - 2;
- 
+        if ( n % 2 == 0 ) last = n - 1;
+        else last = n - 2;
         if ( a [n - 2] ) {
             printf ("%d:\n%d+%d\n", n, 2, n - 2);
             continue;
         }
  
         bool flag = true;
- 
         while ( n - last <= last ) {
             if ( a [last] && a [n - last] ) {
                 printf ("%d:\n%d+%d\n", n, n - last, last);
