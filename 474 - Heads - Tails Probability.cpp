@@ -9,6 +9,6 @@ int main(){
 	double n;
 	while(cin>>n){
 		double num_digits = floor(n*log10(2) + 1) ;
-		printf("2^-%.0lf = %.3lfe-%.0lf\n",n, exp((num_digits-n)*log(2)+num_digits*log(5)),num_digits);
+		printf("2^-%.0lf = %.3lfe-%.0lf\n",n, exp(num_digits - n*log10(2)),num_digits);
 	}
 }
