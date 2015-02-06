@@ -1,44 +1,45 @@
-#include <stdio.h>
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <string.h>
+#include <cmath>
+
+using namespace std;
+#define N 1000003
+bool v[N];
+
+void criba (){
+    memset (v, true, sizeof (v));
+    v [0] = v [1] = false;
  
-bool a [1000003];
+    for ( int i = 4; i < N; i += 2 )
+        v [i] = false;
  
-void prime (){
-    for ( int i = 0; i < 1000003; i++ )
-        a [i] = true;
- 
-    for ( int i = 2; i < 1002; i++ ) {
-        for ( int j = i * i; j < 1000003; j += i )
-            a [j] = false;
+    for ( int i = 3; i * i <= N; i++ ) {
+        if ( v [i] ) {
+            for ( int j = i * i; j < N; j += 2 * i )
+                v [j] = false;
+        }
     }
- 
-    a [0] = a [1] = false;
 }
- 
-int main (){
-    prime ();
-    int n;
-    while ( scanf ("%d", &n) && n ) {
-        int last;
-        if ( n % 2 == 0 ) last = n - 1;
-        else last = n - 2;
-        if ( a [n - 2] ) {
-            printf ("%d:\n%d+%d\n", n, 2, n - 2);
-            continue;
-        }
- 
-        bool flag = true;
-        while ( n - last <= last ) {
-            if ( a [last] && a [n - last] ) {
-                printf ("%d:\n%d+%d\n", n, n - last, last);
-                flag = false;
-                break;
-            }
-            last -= 2;
-        }
- 
-        if ( flag )
-            printf ("%d:\nNO WAY!\n", n);
-    }
- 
-    return 0;
+
+int main(){
+	criba();
+	int n, m;
+	while(cin>>n) {
+		if(n == 0)return 0;
+		else{
+			bool exists = false;
+			cout<<n<<":"<<endl;
+			for(int i = n; i>=n/2 && !exists ; --i){
+				if(v[i]){
+					if(v[n-i]){
+						exists = true;
+						cout<<n-i<<"+"<<i<<endl;
+					}
+				}
+			}
+			if(!exists)cout<<"NO WAY!"<<endl;
+		}
+	}
 }
