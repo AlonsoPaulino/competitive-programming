@@ -41,7 +41,6 @@ void init(){
 }
 
 int bfs(){
-	int value = -1;
 	memset(visitados, false, sizeof(visitados));
 	queue<Node> Q;
 	Node node; node.val = s, node.cant = 0;
