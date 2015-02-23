@@ -6,7 +6,7 @@ using namespace std;
 bool v[58];
 
 void init(){
-    for(int i = 0; i < 54; ++i) v[i] = false;
+    for(int i = 0; i < 58; ++i) v[i] = false;
     v['A'-'A'] = true;
     v['O'-'A'] = true;
     v['Y'-'A'] = true;
