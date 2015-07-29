@@ -12,11 +12,13 @@ int main(){
 	
 	while(cin>>n){
 		
-		if(n == 0) return 0;
+		if(n == 0) break;
 		
-		if(n == 1) cout<<"1 1"<<endl;
+		if(n == 1){
+			
+			cout<<"1 1"<<endl;	
 		
-		else{
+		}else{
 			
 			ans = 0;
 			vector<int> v;
@@ -43,4 +45,6 @@ int main(){
 			cout<<n<<" "<<ans + 1<<endl;
 		}
 	}
+
+	return 0;
 }
