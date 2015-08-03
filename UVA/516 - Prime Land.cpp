@@ -24,10 +24,8 @@ int getNum(vector<int> v){
 }
 
 vector<int> getFacts(int num){	
-	
 	vector<int> v;
 	int i = (primes.size() - 1), p = primes[i];
-	
 	while(i >= 0){
 		if(num % p == 0){
 			int power = 1;
@@ -36,10 +34,8 @@ vector<int> getFacts(int num){
 			while(num % p == 0) power++, num /= p;
 			v.push_back(power);
 		}
-		i -= 1;
-		p = primes[i];
+		p = primes[--i];
 	}
-
 	return v;
 }
 
@@ -51,10 +47,9 @@ int main(){
 	while(cin>>x){
 
 		if(x == 0) break;
-
 		string s;
 		getline(cin, s);
-
+		
 		vector<int> factors;
 		factors.push_back(x);
 		istringstream ss(s);
