@@ -1,10 +1,10 @@
 #include <bits/stdc++.h>
-#define MAX 1000001
+#define MAX 81
 using namespace std;
 
 string s;
 vector<int> z(MAX);
-int ls, ans;
+int ls, ans, n;
 
 void z_function() {
 	z[0] = 0;
@@ -30,12 +30,12 @@ void z_function() {
 }
 
 int main() {
-	while (cin >> s) {
-		ls = s.size();
+	cin >> n;
+	for (int k = 0; k < n; ++k){
+		cin >> s;
+		int aux;
 
-		if (ls == 1 && s[0] == '.') {
-			return 0;	
-		}
+		ls = s.size();
 
 		z_function();
 		ans = 1;
@@ -60,6 +60,7 @@ int main() {
 			}
 		}
 
-		cout << ls/ans << endl;
+		cout << ans << endl;
+		if (k < (n - 1)) cout << endl;
 	}
 }
