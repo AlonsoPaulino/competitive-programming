@@ -9,8 +9,7 @@
 using namespace std;
 
 int n, m;
-bool ans;
-string st, q, q1, q2;
+string st, q;
 
 struct node {
 	node *x[ABC];
