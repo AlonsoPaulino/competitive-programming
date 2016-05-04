@@ -4,6 +4,7 @@
 #define pii pair<int, int>
 #define mii map<int, int>
 #define vi vector<int>
+#define vb vector<bool>
 #define mp make_pair
 #define pb push_back
 #define popb pop_back
@@ -13,42 +14,46 @@
 #define debug(x) cout<<#x<<" : "<<x<<endl
 #define debug2(x,y) cout<<#x<<" : "<<x<<" & "<<#y<<" : "<<y<<endl
 #define test() cout<<"hola papa"<<endl
-#define MOD 1000000007
-#define MAX 101
+#define MAX 100001
+#define DIFF 32
 typedef long long ll;
 typedef long double ld;
 typedef unsigned long long ull;
 using namespace std;
 
-int n, k, d;
+int t, n, v[MAX], aux;
 
-ll sum(ll a, ll b) {
-	return (a % MOD + b % MOD) % MOD;
-}
-
-ll dp[MAX][2];
-
-ll solve() {
-	mset2dd(dp, 0, MAX, 2);
-	dp[n][1] = 1, dp[n][0] = 0;
-	for (int i = n-1; i >= 0; --i) {
-		int aux = 0;
-		for (int j = i+1; j <= n && aux < k; ++j, ++aux) {
-			dp[i][1] = sum(dp[i][1], dp[j][1]);
-			if (j - i < d) {
-				dp[i][0] = sum(dp[i][0], dp[j][0]);
-			} else {
-				dp[i][0] = sum(dp[i][0], dp[j][1]);
-			}
-		}
-	}
-	return dp[0][0];
+int cmb(int x) {
+	if (x < 2) return 0;
+	if (x == 2) return 1;
+	return (x * (x-1)) / 2;
 }
 
 int main() {
 	ios::sync_with_stdio(false);
-	while (cin >> n >> k >> d) {
-		cout << solve() << "\n";
+	cin >> t;
+	while (t--) {
+		ll ans = 0;
+		cin >> n; mset(v, 0);
+		vi vaux;
+		for (int i = 0; i < n; ++i) {
+			cin >> aux;
+			if (v[aux] == 0) {
+				vaux.pb(aux);
+			}
+			++v[aux];
+		}
+		for (int i = 0; i < sz(vaux); ++i) {
+			aux = vaux[i];
+			if (v[aux] > 1) {
+				ans += cmb(v[aux]);
+			}
+			for (int j = aux + 1; j < min(aux + DIFF, MAX); ++j) {
+				if (v[j] > 0) {
+					ans += (v[j] * v[aux]);
+				}
+			}
+		}
+		cout << ans << "\n";
 	}
-	return 0;
 }

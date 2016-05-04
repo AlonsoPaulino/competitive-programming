@@ -4,6 +4,7 @@
 #define pii pair<int, int>
 #define mii map<int, int>
 #define vi vector<int>
+#define vb vector<bool>
 #define mp make_pair
 #define pb push_back
 #define popb pop_back
@@ -13,42 +14,46 @@
 #define debug(x) cout<<#x<<" : "<<x<<endl
 #define debug2(x,y) cout<<#x<<" : "<<x<<" & "<<#y<<" : "<<y<<endl
 #define test() cout<<"hola papa"<<endl
-#define MOD 1000000007
-#define MAX 101
+#define MAX 30001
 typedef long long ll;
 typedef long double ld;
 typedef unsigned long long ull;
 using namespace std;
 
-int n, k, d;
+int n, m, k, xi, xj, ans;
+vi v(MAX, 0);
 
-ll sum(ll a, ll b) {
-	return (a % MOD + b % MOD) % MOD;
+void initset() {
+  for (int i = 0; i < n; ++i) {
+    v[i] = i;
+  }
 }
 
-ll dp[MAX][2];
+int find(int x) {
+  return x == v[x] ? x : v[x] = find(v[x]);
+}
 
-ll solve() {
-	mset2dd(dp, 0, MAX, 2);
-	dp[n][1] = 1, dp[n][0] = 0;
-	for (int i = n-1; i >= 0; --i) {
-		int aux = 0;
-		for (int j = i+1; j <= n && aux < k; ++j, ++aux) {
-			dp[i][1] = sum(dp[i][1], dp[j][1]);
-			if (j - i < d) {
-				dp[i][0] = sum(dp[i][0], dp[j][0]);
-			} else {
-				dp[i][0] = sum(dp[i][0], dp[j][1]);
-			}
-		}
-	}
-	return dp[0][0];
+void join(int x, int y) {
+  v[find(x)] = find(y);
 }
 
 int main() {
-	ios::sync_with_stdio(false);
-	while (cin >> n >> k >> d) {
-		cout << solve() << "\n";
-	}
-	return 0;
+  ios::sync_with_stdio(false);
+  while (cin >> n >> m) {
+    initset();
+    if (n == 0 && m == 0) break;
+    for (int i = 0; i < m; ++i) {
+      cin >> k >> xi;
+      for (int j = 1; j < k; ++j) {
+        cin >> xj;
+        join(xi, xj);
+      }
+    }
+    ans = 0;
+    for (int i = 0; i < n; ++i) {
+      if (find(i) == find(0)) ++ans;
+    }
+    cout << ans << "\n";
+  }
+  return 0;
 }
