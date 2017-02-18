@@ -26,71 +26,27 @@ typedef long double ld;
 typedef unsigned long long ull;
 using namespace std;
 
-const int MAX = 100005;
-
-vi f(MAX, -1);
-vi fr(MAX, - 1);
-vb valid(MAX, 1);
-bool ans = 1;
 int n;
-int lastValid = 1;
 
 int main() {
   cin >> n;
   if (n == 1) {
     cout << "1\n";
+  } else if (n % 4 == 2 || n % 4 == 3) {
+    cout << "-1\n";
   } else {
-    if (n & 1) {
-      f[n / 2 + 1] = n / 2 + 1;
-      valid[n / 2 + 1] = 0;
+    vi v(n + 1);
+    int x = 2, y = n;
+    for (int i = 1; i <= n / 2; ++i) {
+      v[i] = (i & 1) ? x : y;
+      (i & 1) ? x += 2 : y -= 2;
+      v[n - i +  1] = n + 1 - v[i];
     }
-    f[1] = 2, f[n] = n - 1;
-    fr[2] = 1, fr[n - 1] = n;
-    valid[2] = valid[n - 1] = 0;
-    for (int i = 2; i <= n / 2; ++i) {
-      int x = f[i], y = fr[i];
-      if (x != -1 && y == -1) {
-        fr[i] = n + 1 - x;
-        f[n + 1 - x] = i;
-        valid[i] = 0;
-      } else if (y != -1 && x == -1) {
-        f[i] = n + 1 - y;
-        valid[n + 1 - y] = 0;
-        fr[n + 1 - y] = i;
-      }
-      if (f[i] == -1) {
-        bool update = 1;
-        for (int j = lastValid; j <= n; ++j) {
-          if (valid[j]) {
-            if (i == j) {
-              update = 0;
-              continue;
-            }
-            f[i] = j;
-            fr[j] = i;
-            valid[j] = 0;
-            if (update) {
-              lastValid = j;
-            }
-            break;
-          }
-        }
-      }
-      f[n + 1 - i] = n + 1 - f[i];
-      fr[f[n + 1 - i]] = n + 1 - i;
-      valid[n + 1 - f[i]] = 0;
+    if (!v[n / 2 + 1]) {
+      v[n / 2 + 1] = n / 2 + 1;
     }
-    for (int i = 1; i <= n && ans; ++i) {
-      if (f[f[i]] != n + 1 - i) {
-        ans = 0;
-      }
-    }
-    if (ans == 0) {
-      cout << "-1\n";
-    } else {
-      for (int i = 0; i < n; ++i) {
-        cout << f[i + 1] << (i + 1 < n ? " " : "\n");
-      }
+    for (int i = 1; i <= n; ++i) {
+      cout << v[i] << (i < n ? " " : "\n");
     }
   }
 }
