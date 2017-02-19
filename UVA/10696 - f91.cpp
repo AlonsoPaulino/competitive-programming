@@ -26,25 +26,13 @@ typedef long double ld;
 typedef unsigned long long ull;
 using namespace std;
 
-string s;
-string result = "";
-
-vi v(27 + 5);
+int n;
 
 int main() {
-    v['A' - 'A'] = v['E' - 'A'] = v['I' - 'A'] = v['O' - 'A'] = v['U' - 'A'] = v['Y' - 'A'] = 1;
-    cin >> s;
-    for (int i = 0; i < sz(s); ++i) {
-        if (!(s[i] & 32) && !v[s[i] - 'A']) {
-            result.pb('.');
-            result.pb((char) 'a' + (s[i] - 'A'));
-        } else {
-            char x = tolower(s[i]);
-            if (!v[x - 'a']) {
-                result.pb('.');
-                result.pb(s[i]);
-            }
-        }
+    while (cin >> n) {
+        if (n == 0) break;
+        cout << "f91(" << n << ") = ";
+        cout << (n >= 101 ? n - 10 : 91) << "\n";
     }
-    cout << result << "\n";
+    return 0;
 }

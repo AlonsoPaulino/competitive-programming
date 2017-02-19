@@ -27,24 +27,27 @@ typedef unsigned long long ull;
 using namespace std;
 
 string s;
-string result = "";
-
-vi v(27 + 5);
+vi v(30, 0);
+vi x(30, 0);
 
 int main() {
-    v['A' - 'A'] = v['E' - 'A'] = v['I' - 'A'] = v['O' - 'A'] = v['U' - 'A'] = v['Y' - 'A'] = 1;
     cin >> s;
     for (int i = 0; i < sz(s); ++i) {
-        if (!(s[i] & 32) && !v[s[i] - 'A']) {
-            result.pb('.');
-            result.pb((char) 'a' + (s[i] - 'A'));
-        } else {
-            char x = tolower(s[i]);
-            if (!v[x - 'a']) {
-                result.pb('.');
-                result.pb(s[i]);
-            }
+        v[s[i] - 'A']++;
+    }
+    cin >> s;
+    for (int i = 0; i < sz(s); ++i) {
+        v[s[i] - 'A']++;
+    }
+    cin >> s;
+    for (int i = 0; i < sz(s); ++i) {
+        x[s[i] - 'A']++;
+    }
+    bool ans = 1;
+    for (int i = 0; i < 30 && ans; ++i) {
+        if (v[i] != x[i]) {
+            ans = 0;
         }
     }
-    cout << result << "\n";
+    cout << (ans ? "YES" : "NO") << "\n";
 }

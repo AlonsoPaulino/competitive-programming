@@ -26,25 +26,20 @@ typedef long double ld;
 typedef unsigned long long ull;
 using namespace std;
 
-string s;
-string result = "";
+ll b, p, m;
 
-vi v(27 + 5);
+ll fexp(ll x, ll y) {
+    if (y == 0) return 1;
+    if (y == 1) return x % m;
+    if (y & 1) {
+        return ((x % m) * (fexp(x % m, y - 1) % m)) % m;
+    } else {
+        return ((fexp(x % m, y / 2) % m) * (fexp(x % m, y / 2) % m)) % m;
+    }
+}
 
 int main() {
-    v['A' - 'A'] = v['E' - 'A'] = v['I' - 'A'] = v['O' - 'A'] = v['U' - 'A'] = v['Y' - 'A'] = 1;
-    cin >> s;
-    for (int i = 0; i < sz(s); ++i) {
-        if (!(s[i] & 32) && !v[s[i] - 'A']) {
-            result.pb('.');
-            result.pb((char) 'a' + (s[i] - 'A'));
-        } else {
-            char x = tolower(s[i]);
-            if (!v[x - 'a']) {
-                result.pb('.');
-                result.pb(s[i]);
-            }
-        }
+    while (cin >> b >> p >> m) {
+        cout << fexp(b, p) << "\n";
     }
-    cout << result << "\n";
 }

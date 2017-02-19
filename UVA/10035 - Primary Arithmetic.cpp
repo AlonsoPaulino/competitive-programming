@@ -26,25 +26,34 @@ typedef long double ld;
 typedef unsigned long long ull;
 using namespace std;
 
-string s;
-string result = "";
-
-vi v(27 + 5);
+string a, b;
 
 int main() {
-    v['A' - 'A'] = v['E' - 'A'] = v['I' - 'A'] = v['O' - 'A'] = v['U' - 'A'] = v['Y' - 'A'] = 1;
-    cin >> s;
-    for (int i = 0; i < sz(s); ++i) {
-        if (!(s[i] & 32) && !v[s[i] - 'A']) {
-            result.pb('.');
-            result.pb((char) 'a' + (s[i] - 'A'));
-        } else {
-            char x = tolower(s[i]);
-            if (!v[x - 'a']) {
-                result.pb('.');
-                result.pb(s[i]);
+    while (cin >> a >> b) {
+        if (sz(a) == 1 && sz(b) == 1 && a[0] == '0' && b[0] == '0') {
+            break;
+        }
+        int ans = 0;
+        int carry = 0;
+        reverse(all(a)), reverse(all(b));
+        int l = max(sz(a), sz(b));
+        for (int i = 0; i < l; ++i) {
+            int x = 0, y = 0, result = carry;
+            x = (i < sz(a) ? a[i] - '0' : 0);
+            y = (i < sz(b) ? b[i] - '0' : 0);
+            result += (x + y);
+            if (result > 9) {
+                carry = 1;
+                ++ans;
+            } else {
+                carry = 0;
             }
         }
+        if (ans == 0) {
+            cout << "No carry operation.\n";
+        } else {
+            cout << ans << " carry operation" << (ans > 1 ? "s.\n" : ".\n");
+        }
     }
-    cout << result << "\n";
+    return 0;
 }
