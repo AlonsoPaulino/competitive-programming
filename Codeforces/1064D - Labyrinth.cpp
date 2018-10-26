@@ -26,87 +26,95 @@ typedef long double ld;
 typedef unsigned long long ull;
 using namespace std;
 
-// Note, changing the way I read the table (read string per row instead of each characters) ended up
-// reducing the time for this solution (before this change was 1232 ms, now is 405 ms)
+// Note: I solved using dijkstra in past, using 0-1 BFS this time.
 
-// Using priority queue because we want to prioritize those nodes that has a lesser cumulative L & R.
-
-bool v[N][N];
-bool visit[N][N];
-
-int n, m, r, c, x, y, total;
-
-struct node {
-    int i, j, left, right;
-
-    bool friend operator <(const node a, const node b) {
-        return a.left + a.right > b.left + b.right;
-    }
-};
+int n, m, r, c, x, y;
 
 int d[4][4] = {
     -1, 0, 0, 0,
     1, 0, 0, 0,
-    0,-1, 1, 0,
-    0, 1, 0, 1
+    0, -1, 1, 0,
+    0, 1, 0, 1 
 };
 
-bool valid(int i, int j, int l, int r) {
-    return v[i][j] && !visit[i][j] && i >= 0 && i < n && j >= 0 && j < m && l <= x && r <= y;
+struct node {
+    int i, j, l, r;
+};
+
+node createNode(int i, int j, int l, int r) {
+    node newNode;
+    newNode.i = i, newNode.j = j, newNode.l = l, newNode.r = r;
+    return newNode;
 }
+
+bool isValid(int i, int j, int l, int r) {
+    return i >= 0 && i < n && j >= 0 && j < m && l <= x && r <= y;
+}
+
+int bfs(vector< vb > v) {
+    int total = 0;
+
+    vector< vi > di(n, vi(m, -1));
+
+    node front = createNode(r, c, 0, 0);
     
-void bfs(int i, int j) {
-    node front;
-    front.i = i;
-    front.j = j;
-    front.left = 0;
-    front.right = 0;
+    deque<node> q;
+    q.push_front(front);
 
-    priority_queue<node> q;
-    q.push(front);
-
-    visit[i][j] = true;
+    di[r][c] = 0;
 
     while (!q.empty()) {
-        front = q.top(); q.pop();
+        front = q.front();
+        q.pop_front();
 
-        ++total;
+        for (int i = 0; i < 4; ++i) {
+            int ni = front.i + d[i][0];
+            int nj = front.j + d[i][1];
+            int nl = front.l + d[i][2];
+            int nr = front.r + d[i][3];
 
-        for (int k = 0; k < 4; ++k) {
-            int nexti = front.i + d[k][0];
-            int nextj = front.j + d[k][1];
-            int nextl = front.left + d[k][2];
-            int nextr = front.right + d[k][3];
+            if (isValid(ni, nj, nl, nr) && v[ni][nj]) {
+                if (di[ni][nj] == -1 || nl + nr < di[ni][nj]) {
+                    di[ni][nj] = nl + nr;
 
-            if (valid(nexti, nextj, nextl, nextr)) {
-                visit[nexti][nextj] = true;
-                node next;
-                next.i = nexti, next.j = nextj, next.left = nextl, next.right = nextr;
-                q.push(next);
+                    node newNode = createNode(ni, nj, nl, nr);
+
+                    i < 2 ? q.push_front(newNode) : q.push_back(newNode);
+                }
             }
         }
     }
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            if (di[i][j] != -1) {
+                ++total;
+            }
+        }
+    }
+
+    return total;
 }
 
 int main() {
     ios::sync_with_stdio(false);
 
     cin >> n >> m >> r >> c >> x >> y;
-
     --r, --c;
 
     string s;
+    vector< vb > v(n, vb(m, false));
 
     for (int i = 0; i < n; ++i) {
         cin >> s;
+
         for (int j = 0; j < m; ++j) {
             v[i][j] = (s[j] == '.');
         }
     }
 
-    total = 0;
+    int answer = bfs(v);
 
-    bfs(r, c);
-
-    cout << total << "\n";
+    cout << answer << "\n";
 }
+
