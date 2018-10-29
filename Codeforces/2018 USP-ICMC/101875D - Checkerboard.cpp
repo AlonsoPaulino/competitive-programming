@@ -25,7 +25,32 @@ typedef long double ld;
 typedef unsigned long long ull;
 using namespace std;
 
+ll n, a, b, x, y;
+
+ll ab(ll k) {
+    ll z = k;
+    if (k < 0LL) {
+        z = -1LL * k;
+    }
+    return z;
+}
+
 int main() {
     ios::sync_with_stdio(false);
-    
+
+    cin >> n >> a >> b >> x >> y;
+
+    ll d = (ab(a - x) + ab(b - y));
+
+    if (d == 0LL) {
+        d = 2LL;
+    }
+
+    ll ans = 0LL;
+
+    if (n >= d) {
+        ans = (n - d) / 2LL + 1LL;
+    }
+
+    cout << (ans > 0LL ? ans : 0LL) << "\n";
 }
