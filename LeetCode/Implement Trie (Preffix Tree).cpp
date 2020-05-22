@@ -22,7 +22,7 @@ public:
             for (int i = 0; i < 27; ++i) nd->x[i] = NULL;
         }
         return nd;
-    }t
+    }
     
     /** Inserts a word into the trie. */
     void insert(string word) {
