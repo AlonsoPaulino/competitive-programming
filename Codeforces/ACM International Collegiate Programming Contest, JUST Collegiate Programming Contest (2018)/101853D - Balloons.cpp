@@ -25,8 +25,18 @@ typedef long double ld;
 typedef unsigned long long ull;
 using namespace std;
 
+int t, n, p;
+
 int main() {
-    cin.tie(0);
-    cout.tie(0);
     ios::sync_with_stdio(false);
+    cin >> t;
+    while (t--) {
+        cin >> n;
+        int ans = 0;
+        for (int i = 0; i < n; ++i) {
+            cin >> p;
+            if (p > 0) ans++;
+        }
+        cout << ans << "\n";
+    }
 }

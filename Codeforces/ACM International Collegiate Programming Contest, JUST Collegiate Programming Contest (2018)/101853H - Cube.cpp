@@ -25,8 +25,13 @@ typedef long double ld;
 typedef unsigned long long ull;
 using namespace std;
 
+int t, a;
+
 int main() {
-    cin.tie(0);
-    cout.tie(0);
     ios::sync_with_stdio(false);
+    cin >> t;
+    while (t--) {
+        cin >> a;
+        cout << sqrt(a / 6) << endl;
+    }
 }

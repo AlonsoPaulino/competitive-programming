@@ -25,8 +25,38 @@ typedef long double ld;
 typedef unsigned long long ull;
 using namespace std;
 
+int t, n, q, p, v, op;
+
 int main() {
     cin.tie(0);
     cout.tie(0);
     ios::sync_with_stdio(false);
+    cin >> t;
+    while (t--) {
+        cin >> n >> q;
+        unordered_map<int, int> m;
+        vi a(n);
+        for (int i = 0; i < n; ++i) {
+            cin >> a[i];
+            if (a[i] != 0) {
+                m[a[i]]++;
+            }
+        }
+        for (int i = 0; i < q; ++i) {
+            cin >> op;
+            if (op == 2) {
+                cout << m.size() << endl;
+            } else {
+                cin >> p >> v;
+                int x = a[p - 1];
+                a[p - 1] = v;
+                if (x != 0 && --m[x] == 0) {
+                    m.erase(x);
+                }
+                if (v != 0) {
+                    m[v]++;
+                }
+            }
+        }
+    }
 }

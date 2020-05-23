@@ -25,8 +25,25 @@ typedef long double ld;
 typedef unsigned long long ull;
 using namespace std;
 
+int t, n, x;
+
 int main() {
-    cin.tie(0);
-    cout.tie(0);
     ios::sync_with_stdio(false);
+    cin >> t;
+    while (t--) {
+        cin >> n;
+        vi v;
+        map<int, int> m;
+        for (int i = 0; i < n; ++i) {
+            cin >> x;
+            if (!m[x]) v.pb(x);
+            m[x]++;
+        }
+        int ans = 0;
+        for (int i = 0; i < sz(v); ++i) {
+            int aux = max(m[v[i]] + m[v[i] + 1], m[v[i]] + m[v[i] - 1]);
+            ans = max(ans, aux);
+        }
+        cout << ans << "\n";
+    }
 }
