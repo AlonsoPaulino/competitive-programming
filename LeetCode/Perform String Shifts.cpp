@@ -9,5 +9,12 @@ public:
         } else {
             return s.substr(diff) + s.substr(0, diff);
         }
+        /* Even thought this is my original code, there is an improvement
+        that can be discussed: Every right shift can be expressed as left shift
+        since it is its complement in terms of string size. If the string size is 5,
+        then, to achieve 3 right shifts, you would need 2 left shifts.
+        With this idea in mind, we can just easily count either left shifts or right shifts
+        and perform the computation getting rid of this if (r > l) :)
+        */
     }
 };
