@@ -27,15 +27,15 @@ using namespace std;
 
 /*
 TIP: Focus on how much you can gain after considering a node to develop tourism rather than industry.
-Let's image the amount of happines you can gain by considering node 'u' as industry is X, if you change
-this node to develop tourism: 1. You lose the amount of happines the evoy sent from 'u' could get, which is
-the number of edges from 'u' to the root, otherwise -> depth(u). 2. In the optimal solution, you can easily
+Let's image the amount of happines you can gain by considering node 'u' as industry is industry(u). If you 
+change this node to develop tourism: 1. You lose the amount of happines the evoy sent from 'u' could get, which 
+is the number of edges from 'u' to the root, otherwise -> depth(u). 2. In the optimal solution, you can easily
 proof that in order to maximize happiness, if node 'u' is choosen for industry, all its childs should be used
 for industry too. Then, if you change 'u' from industry to tourism, all your childs that were supposed to be
 for industries will gain 1 more happines since the node 'u' is now for tourism, and all of the childs should
 go through 'u' to raise the root, in other words, you gain numberOfNodesInSubTree(u).
 
-To sump up, the equation looks like: industry(u) = tourism(u) + depth(u) - numberOfNodesInSubstree(u)
+To sump up, the equation looks like: industry(u) = tourism(u) + depth(u) - numberOfNodesInSubtree(u).
 
 Now the algorithm is simple, image all the nodes are for tourisms, and sort all of them in such a way that you
 maximize the gain of happiness if they are turned into industry using the equation :) 
