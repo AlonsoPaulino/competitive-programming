@@ -28,10 +28,7 @@ using namespace std;
 int t;
 string s;
 
-int main() {
-    cin.tie(0);
-    cout.tie(0);
-    ios::sync_with_stdio(false);
+void two_pointers_solution() {
     cin >> t;
     while (t--) {
         cin >> s;
@@ -60,4 +57,42 @@ int main() {
         }
         cout << ans << endl;
     }
+}
+
+void binary_search_solution() {
+    cin >> t;
+    while (t--) {
+        cin >> s;
+        int l = 3, r = sz(s);
+        int ans = 0;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            map<char, int> m;
+            for (int i = 0; i < mid; ++i) {
+                m[s[i]]++;
+            }
+            bool found = false;
+            if (m['1'] && m['2'] && m['3']) found = true;
+            for (int i = mid; i < sz(s) && !found; ++i) {
+                m[s[i]]++;
+                m[s[i - mid]]--;
+                if (m['1'] && m['2'] && m['3']) found = true;
+            }
+            if (found) {
+                debug2(l, r);
+                ans = mid;
+                r = mid - 1;
+            } else {
+                l = mid + 1;
+            }
+        }
+        cout << ans << endl;
+    }
+}
+
+int main() {
+    cin.tie(0);
+    cout.tie(0);
+    ios::sync_with_stdio(false);
+    two_pointers_solution();
 }
