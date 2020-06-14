@@ -5,7 +5,7 @@ public:
         int n = (int) nums.size();
         int i = 0;
         vector<vector<int>> ans;
-        while (i + 2 < n) {
+        while (i + 2 < n && nums[i] <= 0) {
             int a = nums[i++];
             int j = i;
             while (i + 2 < n && nums[i] == a) ++i;
