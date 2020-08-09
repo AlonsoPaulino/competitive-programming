@@ -21,3 +21,32 @@ public:
         return ans;
     }
 };
+
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        int n = (int) nums.size();
+        unordered_map<int, int> mnums;
+        map<pair<int, int>, bool> mpairs;
+        vector<vector<int>> ans;
+        for (auto x: nums) mnums[x]++;
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                int a = nums[i], b = nums[j], c = -1 * (a + b);
+                int cnt = 0;
+                if (a == c) cnt++;
+                if (b == c) cnt++;
+                if (mnums[c] > cnt) {
+                    vector<int> aux = {a, b, c};
+                    int x = min(a, min(b, c)), y = max(a, max(b, c));
+                    pair<int, int> pp = { x, y };
+                    if (!mpairs[pp]) {
+                        mpairs[pp] = 1;
+                        ans.push_back(aux);
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+};
