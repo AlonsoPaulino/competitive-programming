@@ -22,5 +22,18 @@ using namespace std;
 
 int main() {
     ios::sync_with_stdio(false); cin.tie(0); cout.tie(0);
-    
+    int t; cin >> t;
+    while (t--) {
+        string s; cin >> s;
+        vi v; int cnt = 0, ans = 0;
+        for (int i = 0; i < sz(s) + 1; ++i) {
+            if (i == sz(s) || s[i] == '0') {
+                v.pb(cnt);
+                cnt = 0;
+            } else cnt++;
+        }
+        sort(v.rbegin(), v.rend());
+        for (int i = 0; i < sz(v); i += 2) ans += v[i];
+        cout << ans << endl;
+    }
 }
