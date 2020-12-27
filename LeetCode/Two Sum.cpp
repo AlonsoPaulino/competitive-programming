@@ -19,3 +19,29 @@ public:
         return ans;
     }
 };
+
+/* Another solution written at 12/27/2020 */
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int, vector<int>> m;
+        vector<int> ans;
+        int n = (int) nums.size();
+        for (int i = 0; i < n; ++i) {
+            m[nums[i]].push_back(i);
+        }
+        for (int i = 0; i < n; ++i) {
+            int x = nums[i], y = target - x;
+            if (x == y && (int) m[x].size() > 1) {
+                ans.push_back(m[x][0]);
+                ans.push_back(m[x][1]);
+                break;
+            } else if (x != y && m.find(y) != m.end()) {
+                ans.push_back(m[x][0]);
+                ans.push_back(m[y][0]);
+                break;
+            }
+        }
+        return ans;
+    }
+};
