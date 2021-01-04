@@ -23,3 +23,27 @@ public:
         return -1;
     }
 };
+
+/* Another solution written at 01/04/2021 */
+class Solution {
+public:
+    int singleNonDuplicate(vector<int>& nums) {
+        int n = (int) nums.size();
+        int lo = 0, hi = n - 1;
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+            int x = nums[mid];
+            
+            if (mid > 0 && nums[mid - 1] == x) {
+                if (mid % 2 == 0) hi = mid - 1;
+                else lo = mid + 1;
+            } else if (mid + 1 < n && nums[mid + 1] == x) {
+                if (mid % 2 == 1) hi = mid - 1;
+                else lo = mid + 1;
+            } else {
+                return x;
+            }
+        }
+        return -1;
+    }
+};
