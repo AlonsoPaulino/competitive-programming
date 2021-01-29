@@ -26,3 +26,20 @@ public:
         return x;
     }
 };
+
+// Another solution written at 01/28/2021
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if (head == NULL) return NULL;
+        
+        ListNode *a = head, *b = head->next;
+        a->next = NULL;
+        while (b != NULL) {
+            ListNode *tmp = b->next;
+            b->next = a;
+            a = b, b = tmp;
+        }
+        return a;
+    }
+};
