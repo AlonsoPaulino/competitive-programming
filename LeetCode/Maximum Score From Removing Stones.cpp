@@ -1,20 +1,20 @@
 class Solution {
 public:
-    bool check(vector<int>& nums) {
-        int n = (int) nums.size();
-        for (int i = 0; i < n; ++i) nums.push_back(nums[i]);
-        for (int i = 0; i < n; ++i) {
-            int a = nums[i];
-            bool asc = true;
-            for (int j = 1; j < n; ++j) {
-                if (nums[i + j] < a) {
-                    asc = false;
-                    break;
-                }
-                a = nums[i + j];
-            }
-            if (asc) return true;
+    int maximumScore(int a, int b, int c) {
+        vector<int> v(3);
+        v[0] = a, v[1] = b, v[2] = c;
+        
+        sort(v.begin(), v.end());
+        
+        int ans = 0;
+        
+        for (int i = 0; i < v[0]; ++i) {
+            if (v[2] > v[1]) v[2]--;
+            else v[1]--;
+            ans++;
         }
-        return false;
+        
+        ans += min(v[1], v[2]);
+        return ans;
     }
 };
