@@ -21,3 +21,18 @@ public:
         return root;
     }
 };
+
+// Another solution written in 01/26/2021
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        if (root == NULL) return NULL;
+        
+        TreeNode* x = root;
+        TreeNode* aux = root->right;
+        root->right = invertTree(root->left);
+        root->left = invertTree(aux);
+        
+        return root;
+    }
+};

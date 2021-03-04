@@ -25,3 +25,25 @@ public:
         return ans;
     }
 };
+
+
+// Another solution written in 01/26/2021
+class Solution {
+    int ans = 0;
+public:
+    int solve(TreeNode* root) {
+        if (root == NULL) return 0;
+        
+        int l = solve(root->left);
+        int r = solve(root->right);
+        
+        ans = max(ans, l + r);
+        
+        return max(l, r) + 1;
+    }
+    
+    int diameterOfBinaryTree(TreeNode* root) {
+        solve(root);
+        return ans;
+    }
+};
