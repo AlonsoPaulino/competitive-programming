@@ -30,3 +30,34 @@ public:
         return ans;
     }
 };
+
+
+// Another approach written on 04/30/2021
+class Solution {
+public:
+    vector<int> powerfulIntegers(int x, int y, int bound) {
+        vector<int> a, b;
+        set<int> ans;
+        a.push_back(1), b.push_back(1);
+        
+        int ax = 1, by = 1;
+        while (x > 1 && ax * x < bound) {
+            a.push_back(ax * x);
+            ax *= x;
+        }
+        while (y > 1 && by * y < bound) {
+            b.push_back(by * y);
+            by *= y;
+        }
+        
+        for (int i = 2; i <= bound; ++i) {
+            for (int j = 0; j < a.size(); ++j) {
+                if (a[j] >= i) break;
+                auto it = lower_bound(b.begin(), b.end(), i - a[j]);
+                if (it != b.end() && *it == i - a[j]) ans.insert(i);
+            }
+        }
+        
+        return vector<int>(ans.begin(), ans.end());
+    }
+};
