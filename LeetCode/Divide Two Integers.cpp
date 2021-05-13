@@ -1,17 +1,18 @@
 class Solution {
 public:
     int divide(int dividend, int divisor) {
-        long sign = 1L;
+        int sign = 1;
         long a = (long) dividend, b = (long) divisor;
         
         if (dividend < 0 && divisor < 0) {
-            a = dividend * -1L, b = divisor * -1L;
+            a = (long) dividend, b = (long) divisor;
+            a = -a, b = -b;
         } else if (dividend < 0) {
-            sign = -1L;
-            a = dividend * -1L;
+            sign = -1;
+            a = dividend, a = -a;
         } else if (divisor < 0) {
-            sign = -1L;
-            b = divisor * -1L;
+            sign = -1;
+            b = divisor, b = -b;
         }
         
         if (a < b) return 0;
@@ -29,9 +30,11 @@ public:
             ans += 1L;
         }
         
-        if (sign == -1L && ans - 1 > INT_MAX) return INT_MAX;
-        if (sign == 1L && ans > INT_MAX) return INT_MAX;
+        if (sign == -1 && ans - 1 > INT_MAX) return INT_MAX;
+        if (sign == 1 && ans > INT_MAX) return INT_MAX;
         
-        return (int) ans * sign;
+        if (sign == -1) return -ans;
+        
+        return ans;
     }
 };
