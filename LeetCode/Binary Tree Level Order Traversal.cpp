@@ -40,3 +40,25 @@ public:
         return ans;
     }
 };
+
+// Another solution written at 05/20/2021
+class Solution {
+    vector<vector<int>> ans;
+public:
+    void bfs(TreeNode* root, int x) {
+        if (root == NULL) return;
+        int n = (int) ans.size();
+        if (n > x) {
+            ans[x].push_back(root->val);
+        } else {
+            ans.push_back(vector<int>(1, root->val));
+        }
+        bfs(root->left, x + 1);
+        bfs(root->right, x + 1);
+    }
+    
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        bfs(root, 0);
+        return ans;
+    }
+};
