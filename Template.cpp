@@ -11,7 +11,6 @@
 #define se second
 #define popb pop_back
 #define all(v) v.begin(),v.end()
-#define mset(v, x) memset(v, x, sizeof(v))
 #define debug(x) cerr<<#x<<" : "<<x<<"\n"
 #define debug2(x,y) cerr<<#x<<" : "<<x<<" & "<<#y<<" : "<<y<<"\n"
 #define test() cerr<<"hola papa"<<endl
