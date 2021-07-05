@@ -14,3 +14,17 @@ public:
         return max_so_far; 
     }
 };
+
+// Another solution written at 07/04/2021
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int ans = INT_MIN, aux = 0;
+        for (auto x: nums) {
+            aux += x;
+            ans = max(ans, aux);
+            if (aux < 0) aux = 0;
+        }
+        return ans;
+    }
+};
