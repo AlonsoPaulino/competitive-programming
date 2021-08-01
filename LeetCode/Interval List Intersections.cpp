@@ -20,3 +20,31 @@ public:
         return ans;
     }
 };
+
+// Another solution written on 08/01/2021
+class Solution {
+public:
+    vector<vector<int>> intervalIntersection(vector<vector<int>>& firstList, vector<vector<int>>& secondList) {
+        int n = (int) firstList.size();
+        int m = (int) secondList.size();
+        int i = 0, j = 0;
+        vector<vector<int>> ans;
+        while (i < n && j < m) {
+            auto x = firstList[i], y = secondList[j];
+            int a = max(x[0], y[0]), b = min(x[1], y[1]);
+            if (b >= a) {
+                vector<int> tmp;
+                tmp.push_back(a), tmp.push_back(b);
+                ans.push_back(tmp);
+            }
+            if (x[1] > y[1]) {
+                ++j;
+            } else if (x[1] < y[1]) {
+                ++i;
+            } else {
+                ++i, ++j;
+            }
+        }
+        return ans;
+    }
+};
