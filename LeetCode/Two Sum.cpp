@@ -45,3 +45,37 @@ public:
         return ans;
     }
 };
+
+// Another solution written on 07/02/2021
+class Solution {
+public:
+    int bs(vector<pair<int, int>> &v, int start, int end, int k) {
+        int lo = start, hi = end;
+        while (lo <= hi) {
+            int mid = lo + (hi - lo) / 2;
+            if (v[mid].first < k) {
+                lo = mid + 1;
+            } else if (v[mid].first > k) {
+                hi = mid - 1;
+            } else return v[mid].second;
+        }
+        return -1;
+    }
+    
+    vector<int> twoSum(vector<int>& nums, int target) {
+        int n = (int) nums.size();
+        vector<pair<int, int>> v;
+        for (int i = 0; i < n; ++i) v.push_back({ nums[i], i });
+        sort(v.begin(), v.end());
+        for (int i = 0; i + 1 < n; ++i) {
+            int x = v[i].first, y = target - x;
+            int j = bs(v, i + 1, n - 1, y);
+            if (j != -1) {
+                vector<int> ans(2, 0);
+                ans[0] = v[i].second, ans[1] = j;
+                return ans;
+            }
+        }
+        return vector<int>();
+    }
+};
