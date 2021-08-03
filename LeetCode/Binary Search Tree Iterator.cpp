@@ -39,9 +39,27 @@ public:
     }
 };
 
-/**
- * Your BSTIterator object will be instantiated and called as such:
- * BSTIterator* obj = new BSTIterator(root);
- * int param_1 = obj->next();
- * bool param_2 = obj->hasNext();
- */
+// Another solution written on 08/03/2021
+class BSTIterator {
+    queue<int> q;
+public:
+    void dfs(TreeNode* x) {
+        if (x == NULL) return;
+        dfs(x->left);
+        q.push(x->val);
+        dfs(x->right);
+    }
+    
+    BSTIterator(TreeNode* root) {
+        dfs(root);
+    }
+    
+    int next() {
+        int x = q.front(); q.pop();
+        return x;
+    }
+    
+    bool hasNext() {
+        return !q.empty();
+    }
+};
