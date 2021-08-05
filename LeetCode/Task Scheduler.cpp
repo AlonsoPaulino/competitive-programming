@@ -13,3 +13,25 @@ public:
         return max(ans, 0) + (int) (tasks.size());
     }
 };
+
+// Another solution written on 08/05/2021
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        int sz = (int) tasks.size(), ans = 0;
+        vector<int> f(30);
+        for (int i = 0; i < sz; ++i) {
+            f[tasks[i] - 'A']++, ans++;
+        }
+        sort(f.rbegin(), f.rend());
+        int idle_groups = f[0] - 1;
+        int idle_time = idle_groups * n;
+        
+        for (int i = 1; i < 30 && idle_time > 0; ++i) {
+            idle_time = max(0, idle_time - min(f[i], idle_groups)); 
+        }
+        
+        ans += idle_time;
+        return ans;
+    }
+};
