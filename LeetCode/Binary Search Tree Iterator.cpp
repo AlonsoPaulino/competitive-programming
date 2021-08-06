@@ -63,3 +63,31 @@ public:
         return !q.empty();
     }
 };
+
+// Another solution written on 08/05/2021
+class BSTIterator {
+    queue<int> q;
+public:
+    void dfs(TreeNode* x) {
+        if (x == NULL) return;
+        dfs(x->left);
+        q.push(x->val);
+        dfs(x->right);
+    }
+    
+    BSTIterator(TreeNode* root) {
+        dfs(root);
+    }
+    
+    int next() {
+        int res = q.front();
+        q.pop();
+        return res;
+    }
+    
+    bool hasNext() {
+        return !q.empty();
+    }
+};
+
+
