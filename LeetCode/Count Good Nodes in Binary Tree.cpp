@@ -28,3 +28,22 @@ public:
         return cnt;
     }
 };
+
+// Another solution written on 08/17/2021
+class Solution {
+    int ans = 0;
+public:
+    void solve(TreeNode* root, int hi) {
+        if (root == NULL) return;
+        if (root->val >= hi) ++ans;
+        solve(root->left, max(root->val, hi));
+        solve(root->right, max(root->val, hi));
+    }
+    
+    int goodNodes(TreeNode* root) {
+        if (root != NULL) {
+            solve(root, root->val);
+        }
+        return ans;
+    }
+};
