@@ -2,17 +2,11 @@ class Solution {
 public:
     pair<int, int> add(char a, char b, int carry) {
         int na = a - '0', nb = b - '0';
-        int sum = na + nb;
-        if (sum == 0) {
-            return {carry, 0};
-        }
-        if (sum == 1) {
-            if (carry == 1) {
-                return {0, 1};
-            }
-            return {1, 0};
-        }
-        return {carry, 1};
+        int sum = na + nb + carry;
+        if (sum == 0) return {0, 0};
+        if (sum == 1) return {1, 0};
+        if (sum == 2) return {0, 1};
+        return {1, 1};
     }
     
     string addBinary(string a, string b) {
@@ -27,12 +21,8 @@ public:
             s += (sum.first + '0');
             carry = sum.second;
         }
-        if (carry != 0) {
-            s += '1';
-        }
-        if (s.size() == 0) {
-            return "0";
-        }
+        if (carry != 0) s += '1';
+        if (s.size() == 0) return "0";
         reverse(s.begin(), s.end());
         return s;
     }
