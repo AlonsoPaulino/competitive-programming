@@ -32,29 +32,31 @@ public:
 // Another solution written on 09/07/2021
 class Solution {
 public:
-    int target;
+    int target, n;
+    vector<int> v;
     bool ans = false;
     
     map<pair<int, int>, bool> memo;
     
-    bool dp(vector<int>& v, int sum, int i, int n) {
+    bool dp(int sum, int i) {
         auto it = memo.find({sum, i});
         if (it != memo.end()) {
             return it->second;
         }
-        if (sum > target) return false;
         if (sum == target) return true;
-        if (i == n) return false;
-        bool res = dp(v, sum, i + 1, n) || dp(v, sum + v[i], i + 1, n);
+        if (sum > target || i == n) return false;
+        
+        bool res =  dp(sum + v[i], i + 1) || dp(sum, i + 1);
         memo[{sum, i}] = res;
+        
         return res;
     }
     
     bool canPartition(vector<int>& nums) {
-        int n = (int) nums.size(), total = 0;
-        for (int i = 0; i < n; ++i) total += nums[i];
+        v = nums, n = (int) nums.size();
+        int total = 0; for (auto x: nums) total += x;
         if (total % 2 != 0) return false;
         target = total / 2;
-        return dp(nums, 0, 0, n);
+        return dp(0, 0);
     }
 };
