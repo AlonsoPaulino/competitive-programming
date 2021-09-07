@@ -45,3 +45,27 @@ public:
         return true;
     }
 };
+
+// Another solution written on 09/06/2021
+class Solution {
+public:
+    bool is_valid(char c) {
+        return (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9');
+    }
+    
+    bool isPalindrome(string s) {
+        int n = (int) s.size();
+        int i = 0, j = n - 1;
+        while (i <= j) {
+            while (i <= j && !is_valid(s[i])) ++i;
+            while (j >= i && !is_valid(s[j])) --j;
+            if (i < j) {
+                if (tolower(s[i]) != tolower(s[j])) {
+                    return false;
+                }
+            }
+            ++i, --j;
+        }
+        return true;
+    }
+};
