@@ -43,3 +43,39 @@ public:
         return *st.begin();
     }
 };
+
+// Another solution written on 09/07/2021
+class Solution {
+public:
+    int cnt = 0;
+    int max_depth = -1;
+    TreeNode* ans = NULL;
+    
+    void dfs(TreeNode* x, int d) {
+        if (x == NULL) return;
+        if (d == max_depth) ++cnt;
+        else if (d > max_depth) {
+            max_depth = d, cnt = 1;
+        }
+        dfs(x->left, d + 1);
+        dfs(x->right, d + 1);
+    }
+    
+    int solve(TreeNode* x, int d) {
+        if (x == NULL) return 0;
+        int a = solve(x->left, d + 1);
+        int b = solve(x->right, d + 1);
+        int c = (d == max_depth) ? 1 : 0;
+        int res = a + b + c;
+        if (ans == NULL && res == cnt) {
+            ans = x;
+        }
+        return res;
+    }
+    
+    TreeNode* lcaDeepestLeaves(TreeNode* root) {
+        dfs(root, 0);
+        solve(root, 0);
+        return ans;
+    }
+};
