@@ -40,3 +40,32 @@ public:
         return ans;
     }
 };
+
+// Another solution written on 09/07/2021
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        int n = (int) s.size(), m = (int) p.size();
+        unordered_map<char, int> um;
+        unordered_map<char, int> x;
+        vector<int> ans;
+        for (auto c: p) um[c]++;
+        for (int i = 0; i < n; ++i) {
+            x[s[i]]++;
+            if (i >= m) {
+                x[s[i - m]]--;
+            }
+            bool add = true;
+            for (auto it: um) {
+                if (it.second != x[it.first]) {
+                    add = false;
+                    break;
+                }
+            }
+            if (add) {
+                ans.push_back(i - m + 1);
+            }
+        }
+        return ans;
+    }
+};
