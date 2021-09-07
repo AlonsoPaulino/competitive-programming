@@ -37,3 +37,21 @@ public:
         return ans;
     }
 };
+
+// Another solution written on 09/06/2021
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int n = (int) nums.size();
+        vector<int> ans(n, 1);
+        for (int i = 1; i < n; ++i) {
+            ans[i] = nums[i - 1] * ans[i - 1];
+        }
+        int x = nums[n - 1];
+        for (int i = n - 2; i >= 0; --i) {
+            ans[i] *= x;
+            x = x * nums[i];
+        }
+        return ans;
+    }
+};
