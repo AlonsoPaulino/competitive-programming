@@ -24,3 +24,21 @@ public:
         return solve(root, (long) INT_MIN, (long) INT_MAX);
     }
 };
+
+// Solution written on 09/07/2021
+typedef long long ll;
+
+class Solution {
+public:
+    bool dfs(TreeNode* root, ll lo, ll hi) {
+        if (root == NULL) return true;
+        bool left = dfs(root->left, lo, root->val - 1LL);
+        bool right = dfs(root->right, root->val + 1LL, hi);
+        bool curr = root->val >= lo && root->val <= hi;
+        return left && right && curr;
+    }
+    
+    bool isValidBST(TreeNode* root) {
+        return dfs(root, INT_MIN, INT_MAX);
+    }
+};
