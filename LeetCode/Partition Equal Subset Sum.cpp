@@ -28,3 +28,33 @@ public:
         return f(target, 0);
     }
 };
+
+// Another solution written on 09/07/2021
+class Solution {
+public:
+    int target;
+    bool ans = false;
+    
+    map<pair<int, int>, bool> memo;
+    
+    bool dp(vector<int>& v, int sum, int i, int n) {
+        auto it = memo.find({sum, i});
+        if (it != memo.end()) {
+            return it->second;
+        }
+        if (sum > target) return false;
+        if (sum == target) return true;
+        if (i == n) return false;
+        bool res = dp(v, sum, i + 1, n) || dp(v, sum + v[i], i + 1, n);
+        memo[{sum, i}] = res;
+        return res;
+    }
+    
+    bool canPartition(vector<int>& nums) {
+        int n = (int) nums.size(), total = 0;
+        for (int i = 0; i < n; ++i) total += nums[i];
+        if (total % 2 != 0) return false;
+        target = total / 2;
+        return dp(nums, 0, 0, n);
+    }
+};
