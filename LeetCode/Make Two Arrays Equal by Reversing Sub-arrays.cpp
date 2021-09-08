@@ -19,3 +19,17 @@ public:
         return true;
     }
 };
+
+// Another solution written on 09/07/2021
+class Solution {
+public:
+    bool canBeEqual(vector<int>& target, vector<int>& arr) {
+        unordered_map<int, int> um;
+        for (auto it: target) um[it]++;
+        for (auto it: arr) um[it]--;
+        for (auto it: um) {
+            if (it.second != 0) return false;
+        }
+        return true;
+    }
+};
