@@ -41,3 +41,35 @@ public:
     
     
 // 3: 30 * 5 + 24 * 4 = 150 + 96 = 246
+
+
+// Another solution written on 09/07/2021
+typedef long long ll;
+const ll MOD = 1e9 + 7LL;
+
+class Solution {
+public:
+    ll sum(ll a, ll b) {
+        a %= MOD, b %= MOD;
+        return (a + b) % MOD;
+    }
+    
+    ll mul(ll a, ll b) {
+        a %= MOD, b %= MOD;
+        return (a * b) % MOD;
+    }
+    
+    int numOfWays(int n) {
+        ll two = 6LL, three = 6LL;
+        ll ans = 12LL;
+        
+        for (int i = 2; i <= n; ++i) {
+            ll x = sum(mul(3LL, two), mul(2LL, three));
+            ll y = sum(mul(2LL, two), mul(2LL, three));
+            two = x, three = y;
+            ans = sum(two, three);
+        }
+        
+        return (int) (ans % MOD);
+    }
+};
