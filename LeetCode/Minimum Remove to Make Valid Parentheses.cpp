@@ -68,3 +68,41 @@ public:
         return ans;
     }
 };
+
+// Another solution written on 09/07/2021
+class Solution {
+public:
+    string minRemoveToMakeValid(string s) {
+        stack<int> st;
+        vector<int> tr;
+        int n = (int) s.size();
+        for (int i = 0; i < n; ++i) {
+            if (s[i] == '(') {
+                st.push(i);
+            } else if (s[i] == ')') {
+                if (st.empty()) {
+                    tr.push_back(i);
+                } else {
+                    st.pop();
+                }
+            }
+        }
+        while (!st.empty()) {
+            tr.push_back(st.top());
+            st.pop();
+        }
+        sort(tr.begin(), tr.end());
+        string ans = "";
+        
+        int j = 0, m = (int) tr.size();
+        for (int i = 0; i < n; ++i) {
+            if (j < m && tr[j] == i) {
+                ++j;
+                continue;
+            }
+            ans += s[i];
+        }
+        
+        return ans;
+    }
+};
