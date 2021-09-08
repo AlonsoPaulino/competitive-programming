@@ -73,3 +73,34 @@ public:
         return true;
     }
 };
+
+// Another solution written on 09/08/2021
+class Solution {
+public:
+    bool isBipartite(vector<vector<int>>& graph) {
+        int n = (int) graph.size();
+        vector<int> color(n, 0);
+        
+        for (int i = 0; i < n; ++i) {
+            if (color[i] == 0) {
+                stack<int> st;
+                color[i] = 1;
+                st.push(i);
+                while (!st.empty()) {
+                    int u = st.top(); st.pop();
+                    int c = color[u];
+                    for (auto v: graph[u]) {
+                        if (color[v] == 0) {
+                            color[v] = c * -1;
+                            st.push(v);
+                        } else {
+                            if (color[v] == c) return false;
+                        }
+                    }
+                }
+            }
+        }
+        
+        return true;
+    }
+};
