@@ -80,3 +80,38 @@ public:
         return ans;
     }
 };
+
+// Another solution written on 08/09/2021
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        if (dividend == 0) return 0;
+        if (dividend == divisor) return 1;
+        
+        int sign = 1;
+        if (dividend > 0 && divisor < 0) sign = -1;
+        else if (dividend < 0 && divisor > 0) sign = -1;
+        
+        if (dividend > 0) dividend *= -1;
+        if (divisor > 0) divisor *= -1;
+        
+        int cnt = -1, result = divisor;
+        
+        if (dividend > divisor) return 0;
+        
+        while(result >= dividend - result) {
+            result = result + result;
+            cnt = cnt + cnt;
+        }
+        
+        while (result >= dividend - divisor) {
+            result = result + divisor;
+            cnt = cnt - 1;
+        }
+        
+        if (cnt == INT_MIN && sign == 1) {
+            return INT_MAX;
+        }
+        return cnt * -sign;
+    }
+};
