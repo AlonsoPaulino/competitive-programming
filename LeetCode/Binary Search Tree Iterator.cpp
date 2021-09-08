@@ -90,4 +90,31 @@ public:
     }
 };
 
+// Another solution written on 09/08/2021
+class BSTIterator {
+public:
+    queue<int> q;
+    
+    void dfs(TreeNode* root) {
+        if (root == NULL) return;
+        dfs(root->left);
+        q.push(root->val);
+        dfs(root->right);
+    }
+    
+    BSTIterator(TreeNode* root) {
+        dfs(root);
+    }
+    
+    int next() {
+        int x = q.front();
+        q.pop();
+        return x;
+    }
+    
+    bool hasNext() {
+        return !q.empty();
+    }
+};
+
 
