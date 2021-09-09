@@ -47,3 +47,25 @@ public:
     }
 };
 
+// Another solution written on 09/08/2021
+class Solution {
+public:
+    int numberOfArithmeticSlices(vector<int>& nums) {
+        int n = (int) nums.size();
+        int i = 0, ans = 0;
+        while (i + 2 < n) {
+            int diff = nums[i + 1] - nums[i];
+            int j = i + 2;
+            while (j < n && nums[j] - nums[j - 1] == diff) ++j;
+            int cnt = j - i;
+            if (cnt >= 3) {
+                for (int k = 2; k < cnt; ++k) {
+                    ans += (cnt - k);
+                }
+            }
+            i = j - 1;
+        }
+        return ans;
+    }
+};
+
