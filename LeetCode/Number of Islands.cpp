@@ -134,3 +134,41 @@ public:
         return (int) st.size();
     }
 };
+
+// Another solution written on 09/08/2021
+class Solution {
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        int n = (int) grid.size();
+        if (n == 0) return 0;
+        int m = (int) grid[0].size();
+        
+        int di[4] = { -1, 1, 0, 0 };
+        int dj[4] = { 0, 0, 1, -1 };
+        int ans = 0;
+        
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {    
+                char c = grid[i][j];
+                if (c == '1') {
+                    stack<pair<int, int>> st;
+                    st.push({i, j});
+                    grid[i][j] = '0';
+                    while (!st.empty()) {
+                        auto p = st.top(); st.pop();
+                        for (int k = 0; k < 4; ++k) {
+                            int ii = p.first + di[k], jj = p.second + dj[k];
+                            if (ii >= 0 && ii < n && jj >= 0 && jj < m && grid[ii][jj] == '1') {
+                                grid[ii][jj] = '0';
+                                st.push({ii, jj});
+                            }
+                        }
+                    }
+                    ++ans;
+                }
+            }
+        }
+        
+        return ans;
+    }
+};
