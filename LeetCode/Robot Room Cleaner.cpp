@@ -94,3 +94,42 @@ public:
         clear({0, 0}, robot);
     }
 };
+
+// Another solution written on 09/08/2021
+class Solution {
+public:
+    map<pair<int, int>, bool> visit;
+    
+    int di[4] = { -1, 0, 1, 0 };
+    int dj[4] = { 0, 1, 0, -1 };
+    
+    bool is_visit(int i, int j) {
+        auto it = visit.find({i, j});
+        return !(it == visit.end());
+    }
+    
+    void f(Robot& robot, int i, int j, int dir) {
+        if (!is_visit(i, j)) {
+            visit[{i, j}] = true;
+            robot.clean();
+        }
+        int curr_dir = dir;
+        for (int k = 0; k < 4; ++k) {
+            robot.turnRight();
+            curr_dir = (curr_dir + 1) % 4;
+            int ii = i + di[curr_dir], jj = j + dj[curr_dir];
+            if (!is_visit(ii, jj) && robot.move()) {
+                f(robot, ii, jj, curr_dir);
+                robot.turnRight();
+                robot.turnRight();
+                robot.move();
+                robot.turnRight();
+                robot.turnRight();
+            }
+        }
+    }
+    
+    void cleanRoom(Robot& robot) {
+        f(robot, 0, 0, 0);
+    }
+};
