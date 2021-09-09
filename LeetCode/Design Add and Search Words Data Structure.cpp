@@ -63,9 +63,62 @@ public:
     }
 };
 
-/**
- * Your WordDictionary object will be instantiated and called as such:
- * WordDictionary* obj = new WordDictionary();
- * obj->addWord(word);
- * bool param_2 = obj->search(word);
- */
+
+
+// Another solution written on 09/08/2021
+class WordDictionary {
+public:
+    /** Initialize your data structure here. */
+    struct Node {
+        bool word;
+        unordered_map<char, Node*> ady;
+        
+        Node(bool w) {
+            word = w;
+        }
+    };
+    
+    Node* root;
+    
+    WordDictionary() {
+        root = new Node(false);
+    }
+    
+    void addWord(string word) {
+        int n = (int) word.size();
+        Node* node = root;
+        for (int i = 0; i < n; ++i) {
+            auto it = node->ady.find(word[i]);
+            if (it == node->ady.end()) {
+                node->ady[word[i]] = new Node(false);
+                node = node->ady[word[i]];
+            } else {
+                node = it->second;
+            }
+        }
+        node->word = true;
+    }
+    
+    bool search(string word) {
+        int n = (int) word.size();
+        queue<pair<int, Node*>> q;
+        q.push({-1, root});
+        while (!q.empty()) {
+            auto p = q.front(); q.pop();
+            Node* node = p.second;
+            int next = p.first + 1;
+            for (auto v: node->ady) {
+                if (word[next] == '.' || v.first == word[next]) {
+                    if (next == n - 1 && v.second->word) {
+                        return true;
+                    }
+                    if (next < n - 1) {
+                        q.push({next, v.second});    
+                    }
+                }
+            }
+        }
+        
+        return false;
+    }
+};
