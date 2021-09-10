@@ -41,3 +41,34 @@ public:
         return ans;
     }
 };
+
+// Another solution written on 09/10/2021
+class Solution {
+public:
+    unordered_map<int, int> dp;
+    
+    int numDecodings(string s) {
+        int n = (int) s.size();
+        return f(s, 0, n);
+    }
+    
+    int f(string &s, int i, int n) {
+        if (i == n) {
+            return 1;
+        }
+        
+        auto it = dp.find(i);
+        if (it != dp.end()) {
+            return it->second;
+        }
+     
+        int res = 0;
+        if (s[i] != '0') {
+            res += f(s, i + 1, n);
+            if (i + 1 < n && (s[i] < '2' || (s[i] == '2' && s[i + 1] <= '6'))) {
+                res += f(s, i + 2, n);
+            }
+        }
+        return dp[i] = res;
+    }
+};
