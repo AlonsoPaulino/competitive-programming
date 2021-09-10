@@ -19,9 +19,8 @@ public:
         }
         for (int k = 1; i + k <= n; ++k) {
             string x = s.substr(i, k);
-            bool result = m.find(x) != m.end() && f(s, i + k, n);
-            if (result) {
-                return dp[i] = true;   
+            if (m.find(x) != m.end() && f(s, i + k, n)) {
+                return dp[i] = true;
             }
         }
         return dp[i] = false;
