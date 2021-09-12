@@ -47,3 +47,22 @@ public:
         return ans;
     }
 };
+
+// Another solution written in 07/01/2021
+class Solution {
+    int ans = 0;
+public:
+    int solve(TreeNode* root) {
+        if (root == NULL) return -1;
+        int left = solve(root->left) + 1;
+        int right = solve(root->right) + 1;
+        ans = max(ans, left + right);
+        return max(left, right);
+    }
+    
+    int diameterOfBinaryTree(TreeNode* root) {
+        if (root == NULL) return 0;
+        solve(root);
+        return ans;
+    }
+};

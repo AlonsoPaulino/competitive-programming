@@ -12,3 +12,26 @@ public:
         return ans;
     }
 };
+
+// Another solution written on 09/05/2021
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int n = (int) s.size();
+        unordered_map<char, int> m;
+        int i = 0, j = 0, ans = 0;
+        while (j < n) {
+            char c = s[j];
+            if (m[c] == 0) {
+                m[c]++;
+                ans = max(ans, j - i + 1);
+                ++j;
+            } else {
+                while (m[c] > 0) {
+                    --m[s[i]], ++i;
+                }
+            }
+        }
+        return ans;
+    }
+};

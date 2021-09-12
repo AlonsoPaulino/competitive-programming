@@ -16,3 +16,26 @@ public:
         return window;
     }
 };
+
+// Another solution written on 09/06/2021
+class Solution {
+public:    
+    int lengthOfLongestSubstringKDistinct(string s, int k) {
+        unordered_map<char, int> um;
+        int i = 0, j = 0, n = (int) s.size();
+        int ans = 0;
+        while (j < n) {
+            ++um[s[j]];
+            while (i <= j && um.size() > k) {
+                --um[s[i]];
+                if (um[s[i]] == 0) um.erase(s[i]);
+                ++i;
+            }
+            if (i <= j) {
+                ans = max(ans, j - i + 1);
+            }
+            ++j;
+        }
+        return ans;
+    }
+};

@@ -16,3 +16,43 @@ public:
         return (int) pq.size();
     }
 };
+
+// Another solution written on 07/01/2021
+const int N = 10e6 + 5;
+
+class Solution {
+public:
+    int read(vector<int> &bit, int x) {
+      int sum = 0;
+      while (x > 0) {
+        sum += bit[x];
+        x -= (x & -x);
+      }
+      return sum;
+    }
+    
+    void modify(vector<int> &bit, int x, int add) {
+      while (x < N) {
+        bit[x] += add;
+        x += (x & -x);
+      }
+    }
+    
+    int minMeetingRooms(vector<vector<int>>& intervals) {
+        vector<int> bit(N, 0);
+        set<int> st;
+        for (auto x: intervals) {
+            x[0] += 1, x[1] += 1;
+            modify(bit, x[0], 1);
+            modify(bit, x[1], -1);
+            st.insert(x[0]);
+            st.insert(x[1]);
+        }
+        
+        int ans = 0;
+        for (auto it: st) {
+            ans = max(ans, read(bit, it));
+        }
+        return ans;
+    }
+};

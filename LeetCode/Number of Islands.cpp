@@ -79,3 +79,96 @@ public:
         return ans;
     }
 };
+
+// Another solution written on 08/31/2021
+class Solution {
+public:
+    int n, m;
+    vector<int> g;
+    
+    int di[4] = { -1, 1, 0, 0 };
+    int dj[4] = { 0, 0, 1, -1 };
+    
+    int find(int x) {
+        if (g[x] == x) return x;
+        return g[x] = find(g[x]);
+    }
+    
+    void join(int x, int y) {
+        g[find(x)] = find(y);
+    }
+    
+    int encode(int i, int j) {
+        return i * m + j;
+    }
+    
+    bool is_valid(int i, int j) {
+        return i >= 0 && i < n && j >= 0 && j < m;
+    }
+    
+    int numIslands(vector<vector<char>>& grid) {
+        n = (int) grid.size();
+        m = (int) grid[0].size();
+        g = vector<int>(n * m + 10, 0);
+        for (int i = 0; i < n * m; ++i) g[i] = i;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                if (grid[i][j] == '1') {
+                    for (int k = 0; k < 4; ++k) {
+                        int ni = i + di[k], nj = j + dj[k];
+                        if (is_valid(ni, nj) && grid[ni][nj] == '1') {
+                            join(encode(ni, nj), encode(i, j));
+                        }
+                    }   
+                }
+            }
+        }
+        set<int> st;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                if (grid[i][j] == '1') {
+                    st.insert(find(encode(i, j)));
+                }
+            }
+        }
+        return (int) st.size();
+    }
+};
+
+// Another solution written on 09/08/2021
+class Solution {
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        int n = (int) grid.size();
+        if (n == 0) return 0;
+        int m = (int) grid[0].size();
+        
+        int di[4] = { -1, 1, 0, 0 };
+        int dj[4] = { 0, 0, 1, -1 };
+        int ans = 0;
+        
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {    
+                char c = grid[i][j];
+                if (c == '1') {
+                    stack<pair<int, int>> st;
+                    st.push({i, j});
+                    grid[i][j] = '0';
+                    while (!st.empty()) {
+                        auto p = st.top(); st.pop();
+                        for (int k = 0; k < 4; ++k) {
+                            int ii = p.first + di[k], jj = p.second + dj[k];
+                            if (ii >= 0 && ii < n && jj >= 0 && jj < m && grid[ii][jj] == '1') {
+                                grid[ii][jj] = '0';
+                                st.push({ii, jj});
+                            }
+                        }
+                    }
+                    ++ans;
+                }
+            }
+        }
+        
+        return ans;
+    }
+};

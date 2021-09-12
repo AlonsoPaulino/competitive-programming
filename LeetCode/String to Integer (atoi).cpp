@@ -39,3 +39,40 @@ public:
         return (int) ans * sign;
     }
 };
+
+// Another solution written on 09/05/2021
+class Solution {
+public:
+    int myAtoi(string s) {
+        int i = 0, n = (int) s.size();
+        int sg = 1;
+        while (i < n && s[i] == ' ') ++i;
+        if (i < n) {
+            if (s[i] == '+') sg = 1, ++i;
+            else if (s[i] == '-') sg = -1, ++i;
+        }
+        if (i >= n || s[i] < '0' || s[i] > '9') {
+            return 0;
+        }
+        long long x = 0LL;
+        while (i < n && s[i] >= '0' && s[i] <= '9') {
+            x *= 10LL;
+            x += (s[i] - '0');
+            if (sg == -1 && x > INT_MAX) {
+                x = INT_MAX + 1LL;
+                break;
+            }
+            if (sg == 1 && x >= INT_MAX) {
+                x = INT_MAX;
+                break;
+            }
+            ++i;
+        }
+        if (sg == -1) {
+            x = x * sg;
+            return (int) x;
+        } else {
+            return x;
+        }
+    }
+};
