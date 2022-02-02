@@ -55,3 +55,21 @@ public:
         return true;
     }
 };
+
+// Another solution written on 02/01/2021
+class Solution {
+public:
+    bool isStrobogrammatic(string num) {
+        int n = (int) num.size();
+        for (int i = 0; i <= n / 2; ++i) {
+            char a = num[i], b = num[n - i - 1];
+            if (a == '1' && b == '1') continue;
+            if (a == '0' && b == '0') continue;
+            if (a == '8' && b == '8') continue;
+            if (a == '9' && b == '6') continue;
+            if (a == '6' && b == '9') continue;
+            return false;
+        }
+        return true;
+    }
+};
